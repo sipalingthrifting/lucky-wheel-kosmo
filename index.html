@@ -2,275 +2,237 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Lucky Wheel Kosmo Toto</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOSMO TOTO – Lucky Wheel</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <style>
 body{
   margin:0;
   min-height:100vh;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   text-align:center;
   color:#fff;
-  padding:20px;
   background:
-    linear-gradient(rgba(5,10,30,.85), rgba(5,10,30,.95)),
+    linear-gradient(rgba(5,10,30,.85),rgba(5,10,30,.95)),
     url("https://i.ibb.co/QvPJVhRr/background.png");
   background-size:cover;
   background-position:center;
+  padding:20px;
 }
 
-.logo-title,.shine-text{
-  font-weight:800;
+/* ===== JUDUL SHINE ===== */
+.shine{
+  font-weight:900;
+  letter-spacing:3px;
   background:linear-gradient(120deg,#00e5ff,#fff,#00e5ff);
   background-size:200%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:shine 3s linear infinite;
-  text-shadow:0 0 20px #00c6ff;
+  text-shadow:0 0 20px rgba(0,198,255,.7);
 }
-.logo-title{font-size:30px}
-.shine-text{font-size:22px;margin-bottom:10px}
-
 @keyframes shine{to{background-position:200%}}
 
+h1{font-size:30px;margin:5px}
+h2{font-size:22px;margin:5px}
+
+/* ===== INPUT ===== */
 input{
-  padding:12px;
   width:80%;
   max-width:320px;
-  border-radius:8px;
+  padding:12px;
+  margin:8px 0;
   border:none;
-  text-align:center;
+  border-radius:8px;
   font-size:16px;
+  text-align:center;
 }
 
 button{
-  margin-top:15px;
-  padding:12px 30px;
-  font-size:16px;
+  padding:12px 35px;
   border:none;
   border-radius:30px;
-  background:linear-gradient(45deg,#00ff9c,#00c6ff);
+  font-size:16px;
   font-weight:bold;
   cursor:pointer;
+  background:linear-gradient(45deg,#00ff9c,#00c6ff);
   box-shadow:0 0 15px #00c6ff;
 }
 
-#status{margin-top:10px;font-weight:bold}
+button:disabled{opacity:.5;cursor:not-allowed}
 
+/* ===== WHEEL ===== */
 #pointer{
   width:0;height:0;
   border-left:14px solid transparent;
   border-right:14px solid transparent;
   border-bottom:28px solid #fff;
-  margin:20px auto -10px;
+  margin:15px auto -5px;
 }
 
-#wheel-container{
-  position:relative;
-  width:300px;
-  height:300px;
-  margin:0 auto;
-}
+#wheelBox{position:relative;width:300px;height:300px;margin:0 auto}
 
 #wheel{
   width:100%;
   height:100%;
   border-radius:50%;
   background:conic-gradient(
-    #ff5252 0deg 60deg,
-    #ff9800 60deg 120deg,
-    #ffeb3b 120deg 180deg,
-    #4caf50 180deg 240deg,
-    #2196f3 240deg 300deg,
-    #9c27b0 300deg 360deg
+    #ff5252 0 60deg,
+    #ff9800 60 120deg,
+    #ffeb3b 120 180deg,
+    #4caf50 180 240deg,
+    #2196f3 240 300deg,
+    #9c27b0 300 360deg
   );
-  transition:transform 2.2s cubic-bezier(.05,.9,.1,1);
+  transition:transform 3.5s cubic-bezier(.05,.9,.1,1);
   box-shadow:0 0 30px rgba(0,198,255,.6);
 }
 
-.segment-text{
+.seg{
   position:absolute;
-  width:50%;
-  left:50%;
-  top:50%;
+  top:50%;left:50%;
   transform-origin:left center;
   font-size:13px;
   font-weight:bold;
 }
 
-#center-logo{
+#logo{
   position:absolute;
-  width:105px;
-  height:105px;
+  width:105px;height:105px;
   border-radius:50%;
-  top:50%;
-  left:50%;
+  top:50%;left:50%;
   transform:translate(-50%,-50%);
   background:#050b1f;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 0 25px #00c6ff;
+  overflow:hidden;
+  box-shadow:0 0 25px #00c6ff,inset 0 0 15px rgba(0,198,255,.6);
 }
 
-#center-logo img{width:70%}
+#logo img{width:70%;z-index:2}
+#logo:after{
+  content:"";
+  position:absolute;
+  width:50%;height:200%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.9),transparent);
+  transform:rotate(25deg);
+  animation:logoShine 3s infinite;
+}
+@keyframes logoShine{from{left:-60%}to{left:160%}}
 
-/* POPUP RESULT */
-#resultPopup{
+/* ===== POPUP HASIL ===== */
+#popup,#livePopup{
   position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-#resultBox{
-  background:#081a33;
-  padding:25px;
-  border-radius:15px;
-  box-shadow:0 0 25px #00c6ff;
-}
-#resultBox button{
-  margin-top:15px;
-}
-
-/* LIVE POPUP */
-#livePopup{
-  position:fixed;
-  bottom:20px;
+  top:20px;
   left:50%;
   transform:translateX(-50%);
-  background:#081a33;
-  padding:12px 18px;
-  border-radius:30px;
-  box-shadow:0 0 15px #00c6ff;
+  background:#0b1230;
+  padding:15px 25px;
+  border-radius:12px;
+  box-shadow:0 0 25px #00c6ff;
   display:none;
-  z-index:998;
-  font-size:14px;
+  z-index:999;
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-title">KOSMO TOTO</div>
-<div class="shine-text">🎡 LUCKY WHEEL</div>
-<p>Masukkan kode kupon</p>
+<h1 class="shine">KOSMO TOTO</h1>
+<h2 class="shine">🎡 LUCKY WHEEL</h2>
 
-<input id="coupon" placeholder="MASUKKAN KODE KUPON">
+<input id="userId" placeholder="MASUKKAN ID USER">
+<input id="coupon" placeholder="KODE KUPON (KOSONGKAN JIKA FREE SPIN)">
 <br>
 <button id="spinBtn" onclick="spin()">SPIN</button>
 
-<div id="status"></div>
-
 <div id="pointer"></div>
 
-<div id="wheel-container">
+<div id="wheelBox">
   <div id="wheel">
-    <div class="segment-text" style="transform:rotate(0deg) translateX(20px)">🎁 BONUS 10K</div>
-    <div class="segment-text" style="transform:rotate(60deg) translateX(20px)">💰 BONUS 20K</div>
-    <div class="segment-text" style="transform:rotate(120deg) translateX(20px)">🎉 FREE SPIN</div>
-    <div class="segment-text" style="transform:rotate(180deg) translateX(20px)">❌ ZONK</div>
-    <div class="segment-text" style="transform:rotate(240deg) translateX(20px)">🔥 BONUS 50K</div>
-    <div class="segment-text" style="transform:rotate(300deg) translateX(20px)">🎫 COBA LAGI</div>
+    <div class="seg" style="transform:rotate(0deg) translateX(20px)">🎁 10K</div>
+    <div class="seg" style="transform:rotate(60deg) translateX(20px)">💰 20K</div>
+    <div class="seg" style="transform:rotate(120deg) translateX(20px)">🎉 FREE</div>
+    <div class="seg" style="transform:rotate(180deg) translateX(20px)">❌ ZONK</div>
+    <div class="seg" style="transform:rotate(240deg) translateX(20px)">🔥 50K</div>
+    <div class="seg" style="transform:rotate(300deg) translateX(20px)">🎫 COBA</div>
   </div>
-
-  <div id="center-logo">
+  <div id="logo">
     <img src="https://i.ibb.co/CsXqGZVn/logo.png">
   </div>
 </div>
 
-<!-- RESULT POPUP -->
-<div id="resultPopup">
-  <div id="resultBox">
-    <h3 id="resultText"></h3>
-    <button onclick="closeResult()">OK</button>
-  </div>
-</div>
-
-<!-- LIVE POPUP -->
-<div id="livePopup"><span id="liveText"></span></div>
+<div id="popup"></div>
+<div id="livePopup"></div>
 
 <script>
 /* ===== KUPON ===== */
 const validCoupons=[
 "KOSMO483920","KOSMO193847","KOSMO572910","KOSMO847261",
-"KOSMO626827","KOSMO501856","KOSMO994261","KOSMO994026"
+"KOSMO626827","KOSMO501856","KOSMO994261","KOSMO994026",
+"KOSMO700427","KOSMO280658","KOSMO307695","KOSMO581793"
 ];
-let usedCoupons=JSON.parse(localStorage.getItem("usedCoupons")||"[]");
 
-/* ===== DATA ===== */
 const prizes=[
-"🎁 BONUS 10K",
-"💰 BONUS 20K",
-"🎉 FREE SPIN",
-"❌ ZONK",
-"🔥 BONUS 50K",
-"🎫 COBA LAGI"
+"BONUS 10K","BONUS 20K","FREE SPIN","ZONK","BONUS 50K","COBA LAGI"
 ];
 
+let used=JSON.parse(localStorage.getItem("used")||"[]");
+let freeSpin=parseInt(localStorage.getItem("freeSpin")||0);
 let spinning=false;
 
 function spin(){
   if(spinning) return;
+  const id=userId.value.trim();
+  const coupon=coupon.value.trim().toUpperCase();
+
+  if(!id){alert("ID wajib diisi");return;}
+
+  if(freeSpin<=0){
+    if(!validCoupons.includes(coupon)){alert("Kupon tidak valid");return;}
+    if(used.includes(coupon)){alert("Kupon sudah dipakai");return;}
+    used.push(coupon);
+    localStorage.setItem("used",JSON.stringify(used));
+  }
+
   spinning=true;
-
-  const code=document.getElementById("coupon").value.trim().toUpperCase();
-  const status=document.getElementById("status");
-  const wheel=document.getElementById("wheel");
-
-  if(!code){status.innerText="❌ Masukkan kode";spinning=false;return;}
-  if(!validCoupons.includes(code)){status.innerText="❌ Kode tidak valid";spinning=false;return;}
-  if(usedCoupons.includes(code)){status.innerText="❌ Kode sudah dipakai";spinning=false;return;}
-
-  usedCoupons.push(code);
-  localStorage.setItem("usedCoupons",JSON.stringify(usedCoupons));
-
-  status.innerText="🎡 Memutar...";
-  document.getElementById("spinBtn").disabled=true;
+  spinBtn.disabled=true;
 
   let chance=Math.random()*100;
-  let index;
+  let idx;
+  if(chance<0.5) idx=4;
+  else if(chance<1) idx=[0,1,2][Math.floor(Math.random()*3)];
+  else idx=[3,3,3,3,5][Math.floor(Math.random()*5)];
 
-  if(chance<0.5){index=4;}
-  else if(chance<1){index=[0,1,2][Math.floor(Math.random()*3)];}
-  else{index=[3,3,3,3,5][Math.floor(Math.random()*5)];}
-
-  const deg=360*(6+Math.random()*3)+index*(360/6);
+  let deg=360*6+idx*(360/prizes.length);
   wheel.style.transform=`rotate(${deg}deg)`;
 
   setTimeout(()=>{
-    document.getElementById("resultText").innerHTML=
-    `SELAMAT 🎉<br>KAMU MENDAPATKAN<br><b>${prizes[index]}</b>`;
-    document.getElementById("resultPopup").style.display="flex";
-    status.innerText="✅ Selesai";
-    spinning=false;
-  },2200);
-}
+    if(prizes[idx]=="FREE SPIN") freeSpin++;
+    else if(freeSpin>0) freeSpin--;
 
-function closeResult(){
-  document.getElementById("resultPopup").style.display="none";
+    localStorage.setItem("freeSpin",freeSpin);
+    popup.innerHTML=`🎉 SELAMAT<br>ID <b>${id}</b><br>MENDAPATKAN<br><b>${prizes[idx]}</b>`;
+    popup.style.display="block";
+    setTimeout(()=>popup.style.display="none",3500);
+
+    spinning=false;
+    spinBtn.disabled=false;
+  },3500);
 }
 
 /* ===== LIVE POPUP HIASAN ===== */
-const liveUsers=[
-"abunawas","adli","admin77","adul9349","alfas123","azam010119",
-"balala01","bethon","bodrex784","mio1000","nagamas","november"
-];
-const livePrizes=["🎁 BONUS 10K","💰 BONUS 20K","🔥 BONUS 50K","🎉 FREE SPIN"];
+const liveUsers=["abunawas","adli","admin77","mio1000","nagamas","november"];
+const livePrize=["BONUS 10K","BONUS 20K","BONUS 50K"];
 
-function showLive(){
+setInterval(()=>{
   const u=liveUsers[Math.floor(Math.random()*liveUsers.length)];
-  const p=livePrizes[Math.floor(Math.random()*livePrizes.length)];
-  document.getElementById("liveText").innerHTML=
-  `🎉 <b>${u}</b> mendapatkan <b>${p}</b>`;
-  const box=document.getElementById("livePopup");
-  box.style.display="block";
-  setTimeout(()=>box.style.display="none",3500);
-}
-setInterval(showLive,9000);
+  const p=livePrize[Math.floor(Math.random()*livePrize.length)];
+  livePopup.innerHTML=`🎉 ${u} mendapatkan ${p}`;
+  livePopup.style.display="block";
+  setTimeout(()=>livePopup.style.display="none",3000);
+},10000);
 </script>
 
 </body>
