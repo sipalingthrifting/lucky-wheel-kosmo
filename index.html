@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ================= BODY & BACKGROUND ================= */
 body{
   margin:0;
   min-height:100vh;
@@ -22,41 +21,21 @@ body{
   background-attachment:fixed;
 }
 
-/* ================= JUDUL SHINE ================= */
-.logo-title,
-.shine-text{
-  position:relative;
+.logo-title,.shine-text{
   display:inline-block;
   font-weight:800;
   letter-spacing:2px;
-  background:linear-gradient(
-    120deg,
-    #00e5ff 0%,
-    #ffffff 40%,
-    #00e5ff 80%
-  );
+  background:linear-gradient(120deg,#00e5ff,#fff,#00e5ff);
   background-size:200% auto;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:shine 3s linear infinite;
   text-shadow:0 0 20px rgba(0,198,255,.7);
 }
+.logo-title{font-size:30px;}
+.shine-text{font-size:22px;margin-bottom:10px;}
+@keyframes shine{to{background-position:200% center}}
 
-.logo-title{
-  font-size:30px;
-  margin-bottom:5px;
-}
-
-.shine-text{
-  font-size:22px;
-  margin-bottom:10px;
-}
-
-@keyframes shine{
-  to{ background-position:200% center; }
-}
-
-/* ================= INPUT & BUTTON ================= */
 input{
   padding:12px;
   width:80%;
@@ -67,7 +46,6 @@ input{
   text-align:center;
   margin-top:10px;
 }
-
 button{
   margin-top:15px;
   padding:12px 30px;
@@ -79,13 +57,8 @@ button{
   font-weight:bold;
   box-shadow:0 0 15px #00c6ff;
 }
+#status{margin-top:15px;font-weight:bold;}
 
-#status{
-  margin-top:15px;
-  font-weight:bold;
-}
-
-/* ================= POINTER ================= */
 #pointer{
   width:0;height:0;
   border-left:14px solid transparent;
@@ -94,14 +67,12 @@ button{
   margin:20px auto -10px;
 }
 
-/* ================= WHEEL ================= */
 #wheel-container{
   position:relative;
   width:300px;
   height:300px;
   margin:0 auto;
 }
-
 #wheel{
   width:100%;
   height:100%;
@@ -114,12 +85,10 @@ button{
     #2196f3 240deg 300deg,
     #9c27b0 300deg 360deg
   );
-  transition:transform 2.2s cubic-bezier(.05,.9,.1,1);
-  position:relative;
+  transition:transform 2.4s cubic-bezier(.05,.9,.1,1);
   box-shadow:0 0 30px rgba(0,198,255,.5);
 }
 
-/* ================= TEXT SEGMENT ================= */
 .segment-text{
   position:absolute;
   width:50%;
@@ -132,7 +101,6 @@ button{
   text-shadow:0 0 5px #000;
 }
 
-/* ================= LOGO TENGAH ================= */
 #center-logo{
   position:absolute;
   width:105px;
@@ -146,40 +114,21 @@ button{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  box-shadow:
-    0 0 25px #00c6ff,
-    inset 0 0 15px rgba(0,198,255,.6);
+  box-shadow:0 0 25px #00c6ff,inset 0 0 15px rgba(0,198,255,.6);
   z-index:10;
 }
-
-#center-logo img{
-  width:70%;
-  height:70%;
-  object-fit:contain;
-  z-index:2;
-}
-
-/* ================= CAHAYA LOGO ================= */
+#center-logo img{width:70%;height:70%;object-fit:contain;z-index:2;}
 .logo-shine{
   position:absolute;
   top:-50%;
   left:-60%;
   width:50%;
   height:200%;
-  background:linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,.9),
-    transparent
-  );
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.9),transparent);
   transform:rotate(25deg);
   animation:logoShine 2.8s infinite;
 }
-
-@keyframes logoShine{
-  0%{ left:-60%; }
-  100%{ left:160%; }
-}
+@keyframes logoShine{0%{left:-60%}100%{left:160%}}
 </style>
 </head>
 
@@ -192,7 +141,6 @@ button{
 <input id="coupon" placeholder="MASUKKAN KODE KUPON">
 <br>
 <button onclick="spin()">SPIN</button>
-
 <div id="status"></div>
 
 <div id="pointer"></div>
@@ -208,14 +156,13 @@ button{
   </div>
 
   <div id="center-logo">
-    <img src="https://i.ibb.co/CsXqGZVn/logo.png" alt="KOSMO TOTO">
+    <img src="https://i.ibb.co/CsXqGZVn/logo.png">
     <span class="logo-shine"></span>
   </div>
 </div>
 
 <script>
-const validCoupons = [
-  "KOSMO483920",
+const validCoupons = ["KOSMO483920","KOSMO193847","KOSMO572910","KOSMO847261","KOSMO626827""KOSMO483920",
   "KOSMO193847",
   "KOSMO572910",
   "KOSMO847261",
@@ -320,8 +267,6 @@ const validCoupons = [
   "KOSMO618506",
   "KOSMO656140"
 ];
-
-
 const prizes = [
   "🎁 BONUS 10K",
   "💰 BONUS 20K",
@@ -331,67 +276,50 @@ const prizes = [
   "🎫 COBA LAGI"
 ];
 
-let usedCoupons = JSON.parse(localStorage.getItem("usedCoupons") || "[]");
+let usedCoupons = JSON.parse(localStorage.getItem("usedCoupons")||"[]");
 
 function spin(){
-  const input = document.getElementById("coupon").value.trim().toUpperCase();
-  const status = document.getElementById("status");
+  const input = coupon.value.trim().toUpperCase();
   const wheel = document.getElementById("wheel");
+  const status = document.getElementById("status");
 
-  if(!input){
-    status.innerHTML = "❌ Masukkan kode terlebih dahulu";
-    status.style.color = "#ff5252";
-    return;
-  }
-
-  if(!validCoupons.includes(input)){
-    status.innerHTML = "❌ Kode tidak valid";
-    status.style.color = "#ff5252";
-    return;
-  }
-
-  if(usedCoupons.includes(input)){
-    status.innerHTML = "⚠️ Kode sudah digunakan";
-    status.style.color = "#ff9800";
-    return;
-  }
+  if(!input){status.innerHTML="❌ Masukkan kode";return;}
+  if(!validCoupons.includes(input)){status.innerHTML="❌ Kode tidak valid";return;}
+  if(usedCoupons.includes(input)){status.innerHTML="⚠️ Kode sudah digunakan";return;}
 
   usedCoupons.push(input);
-  localStorage.setItem("usedCoupons", JSON.stringify(usedCoupons));
+  localStorage.setItem("usedCoupons",JSON.stringify(usedCoupons));
+  status.innerHTML="🎉 Sedang memutar...";
 
-  status.innerHTML = "🎉 Sedang memutar...";
-  status.style.color = "#00ff9c";
+  /* ===== LOGIC DOMINAN ZONK ===== */
+  let rand;
+  const chance = Math.random()*100;
 
- /* ===== LOGIC SUPER SULIT MENANG ===== */
-let rand;
-const chance = Math.random() * 100;
+  if(chance < 0.3){
+    rand = 4; // 0.3% BONUS 50K
+  }else if(chance < 1){
+    const small=[0,1,2];
+    rand = small[Math.floor(Math.random()*small.length)];
+  }else{
+    const zonkHeavy=[3,3,3,3,3,3,5];
+    rand = zonkHeavy[Math.floor(Math.random()*zonkHeavy.length)];
+  }
 
-/*
-  0 - BONUS 10K
-  1 - BONUS 20K
-  2 - FREE SPIN
-  3 - ZONK
-  4 - BONUS 50K (SUPER LANGKA)
-  5 - COBA LAGI
-*/
+  /* ===== PUTAR RODA SINKRON ===== */
+  const segmentDeg = 360/prizes.length;
+  const extraSpin = 360*(7+Math.floor(Math.random()*4));
+  const offset = 270;
 
-if (chance < 0.5) {
-  // 0.5% BONUS 50K
-  rand = 4;
-} else if (chance < 1) {
-  // 0.5% hadiah kecil
-  const winSmall = [0,1,2];
-  rand = winSmall[Math.floor(Math.random() * winSmall.length)];
-} else {
-  // 99% zonk / coba lagi
-  const loseHeavy = [3,3,3,3,3,5];
-  rand = loseHeavy[Math.floor(Math.random() * loseHeavy.length)];
-}
+  let bias = segmentDeg/2;
+  if(rand !== 3) bias += (Math.random()*10-5);
+
+  const degree = extraSpin + rand*segmentDeg + bias + offset;
+  wheel.style.transform = `rotate(${degree}deg)`;
 
   setTimeout(()=>{
-    alert("HASIL SPIN:\n" + prizes[rand]);
-    status.innerHTML = "✅ Kode berhasil digunakan";
-  },2200);
+    alert("HASIL SPIN:\n"+prizes[rand]);
+    status.innerHTML="✅ Kode berhasil digunakan";
+  },2400);
 }
 </script>
 
