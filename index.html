@@ -362,23 +362,31 @@ function spin(){
   status.innerHTML = "🎉 Sedang memutar...";
   status.style.color = "#00ff9c";
 
-  /* ===== LOGIC 5% MENANG ===== */
-  let rand;
-  const chance = Math.random() * 100;
+ /* ===== LOGIC SUPER SULIT MENANG ===== */
+let rand;
+const chance = Math.random() * 100;
 
-  if(chance <= 5){
-    const winIndex = [0,1,2,4];
-    rand = winIndex[Math.floor(Math.random() * winIndex.length)];
-  }else{
-    const loseIndex = [3,5];
-    rand = loseIndex[Math.floor(Math.random() * loseIndex.length)];
-  }
+/*
+  0 - BONUS 10K
+  1 - BONUS 20K
+  2 - FREE SPIN
+  3 - ZONK
+  4 - BONUS 50K (SUPER LANGKA)
+  5 - COBA LAGI
+*/
 
-  const segmentDeg = 360 / prizes.length;
-  const extraSpin = 360 * (6 + Math.floor(Math.random() * 3));
-  const degree = extraSpin + rand * segmentDeg;
-
-  wheel.style.transform = `rotate(${degree}deg)`;
+if (chance < 0.5) {
+  // 0.5% BONUS 50K
+  rand = 4;
+} else if (chance < 1) {
+  // 0.5% hadiah kecil
+  const winSmall = [0,1,2];
+  rand = winSmall[Math.floor(Math.random() * winSmall.length)];
+} else {
+  // 99% zonk / coba lagi
+  const loseHeavy = [3,3,3,3,3,5];
+  rand = loseHeavy[Math.floor(Math.random() * loseHeavy.length)];
+}
 
   setTimeout(()=>{
     alert("HASIL SPIN:\n" + prizes[rand]);
