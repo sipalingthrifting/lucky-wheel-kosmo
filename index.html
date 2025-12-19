@@ -10,54 +10,34 @@
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at top,#061b3a,#020814 70%),
-    url("https://i.ibb.co/QvPJVhRr/background.png");
-  background-size:cover;
+  background:radial-gradient(circle at top,#061b3a,#020814 70%);
   color:#fff;
   text-align:center;
   padding:20px;
 }
 
-/* ===== TITLE SHINE PREMIUM ===== */
+/* TITLE */
 .title{
   font-size:34px;
   font-weight:900;
-  background:linear-gradient(
-    120deg,
-    #00eaff 0%,
-    #ffffff 25%,
-    #00eaff 50%,
-    #ffffff 75%,
-    #00eaff 100%
-  );
+  background:linear-gradient(120deg,#00eaff,#fff,#00eaff);
   background-size:300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:shineMove 2.3s linear infinite;
-  text-shadow:
-    0 0 12px #00eaff,
-    0 0 30px #00c6ff;
+  animation:shine 2.5s linear infinite;
+  text-shadow:0 0 20px #00eaff;
 }
+@keyframes shine{to{background-position:300%}}
 
-@keyframes shineMove{
-  from{background-position:0%}
-  to{background-position:300%}
-}
-
-/* ===== LUCKY WHEEL TEXT ===== */
 .shine-text{
   font-size:22px;
   font-weight:900;
   color:#00eaff;
-  text-shadow:
-    0 0 10px #00eaff,
-    0 0 25px #00c6ff,
-    0 0 45px #00eaff;
+  text-shadow:0 0 10px #00eaff,0 0 25px #00c6ff;
   margin-bottom:10px;
 }
 
-/* ===== INPUT ===== */
+/* INPUT */
 input{
   width:90%;
   max-width:360px;
@@ -69,7 +49,7 @@ input{
   text-align:center;
 }
 
-/* ===== BUTTON ===== */
+/* BUTTON */
 button{
   margin-top:14px;
   padding:14px 42px;
@@ -80,26 +60,23 @@ button{
   font-size:17px;
   cursor:pointer;
   box-shadow:0 0 25px #00eaff;
-  transition:.3s;
 }
-button:hover{transform:scale(1.06)}
 button:disabled{opacity:.5}
 
-/* ===== USER ===== */
+/* USER */
 #userLabel{
   margin-top:6px;
   font-weight:bold;
   color:#7ffcff;
 }
 
-/* ===== WHEEL ===== */
+/* WHEEL */
 #wheelWrap{
   position:relative;
   width:330px;
   height:330px;
   margin:30px auto 90px;
 }
-
 #pointer{
   position:absolute;
   top:-18px;
@@ -109,9 +86,7 @@ button:disabled{opacity:.5}
   border-left:16px solid transparent;
   border-right:16px solid transparent;
   border-bottom:34px solid #fff;
-  filter:drop-shadow(0 0 10px #00eaff);
 }
-
 #wheel{
   width:100%;
   height:100%;
@@ -124,22 +99,16 @@ button:disabled{opacity:.5}
     #2196f3 240deg 300deg,
     #9c27b0 300deg 360deg
   );
-  transition:transform 2.9s cubic-bezier(.1,.9,.1,1);
-  box-shadow:
-    0 0 25px rgba(0,200,255,.7),
-    0 0 60px rgba(0,200,255,.6);
+  transition:transform 3s cubic-bezier(.1,.9,.1,1);
+  box-shadow:0 0 40px rgba(0,200,255,.7);
 }
-
-/* ===== SPIN GLOW ===== */
 .wheel-spin{
-  animation:spinGlow .6s infinite alternate;
+  animation:spinGlow .5s infinite alternate;
 }
 @keyframes spinGlow{
-  from{box-shadow:0 0 25px #00eaff}
-  to{box-shadow:0 0 55px #00c6ff}
+  from{box-shadow:0 0 30px #00eaff}
+  to{box-shadow:0 0 60px #00c6ff}
 }
-
-/* ===== SEGMENT ===== */
 .segment{
   position:absolute;
   width:50%;
@@ -148,10 +117,9 @@ button:disabled{opacity:.5}
   transform-origin:left center;
   font-size:13px;
   font-weight:bold;
-  text-shadow:0 0 6px #000;
 }
 
-/* ===== CENTER LOGO ===== */
+/* CENTER */
 #center{
   position:absolute;
   width:120px;
@@ -160,56 +128,23 @@ button:disabled{opacity:.5}
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  background:#030b1f;
+  background:#020b1f;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:
-    0 0 30px #00eaff,
-    0 0 55px rgba(0,200,255,.9);
+  box-shadow:0 0 35px #00eaff;
 }
-
 #center img{
-  width:72%;
-  animation:logoPulse 2.2s ease-in-out infinite;
-  filter:
-    drop-shadow(0 0 8px #00eaff)
-    drop-shadow(0 0 18px #00c6ff);
+  width:70%;
+  animation:pulse 2s infinite;
 }
-
-@keyframes logoPulse{
+@keyframes pulse{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.1)}
 }
 
-/* ===== POPUP ===== */
-#fakePopup{
-  position:absolute;
-  bottom:-60px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,10,30,.9);
-  padding:10px 22px;
-  border-radius:30px;
-  font-size:13px;
-  font-weight:bold;
-  color:#7ffcff;
-  box-shadow:0 0 22px #00eaff;
-  display:none;
-  animation:fadePop .5s;
-}
-
-@keyframes fadePop{
-  from{opacity:0;transform:translate(-50%,10px)}
-  to{opacity:1}
-}
-
-#status{
-  margin-top:10px;
-  font-weight:bold;
-}
+#status{margin-top:10px;font-weight:bold}
 </style>
-
 </head>
 
 <body>
@@ -220,8 +155,8 @@ button:disabled{opacity:.5}
 <input id="userId" placeholder="MASUKKAN ID USER">
 <div id="userLabel"></div>
 
-<input id="coupon" placeholder="KODE KUPON (KOSONGKAN JIKA FREE SPIN)">
-<button id="spinBtn" onclick="spin()">SPIN</button>
+<input id="coupon" placeholder="MASUKKAN KODE KUPON">
+<button id="spinBtn">SPIN</button>
 
 <div id="status"></div>
 
@@ -240,56 +175,31 @@ button:disabled{opacity:.5}
   <div id="center">
     <img src="https://i.ibb.co/CsXqGZVn/logo.png">
   </div>
-
-  <div id="fakePopup"></div>
 </div>
-const wheel = document.getElementById("wheel");
-const spinBtn = document.getElementById("spinBtn");
-const status = document.getElementById("status");
-const userId = document.getElementById("userId");
-const coupon = document.getElementById("coupon");
-const userLabel = document.getElementById("userLabel");
-const fakePopup = document.getElementById("fakePopup");
-<script>
-/* ===== KUPON ===== */
-const validCoupons = [
-  "KOSMO378417","KOSMO362684","KOSMO232619","KOSMO461009",
-  "KOSMO800563","KOSMO352475","KOSMO956868","KOSMO672144",
-  "KOSMO353094","KOSMO208904","KOSMO989642","KOSMO758251",
-  "KOSMO679275","KOSMO588099","KOSMO207371","KOSMO138224",
-  "KOSMO565062","KOSMO208946","KOSMO014196","KOSMO449140",
-  "KOSMO749763","KOSMO422525","KOSMO450756","KOSMO920737",
-  "KOSMO192791","KOSMO238410","KOSMO030710","KOSMO932657",
-  "KOSMO852733","KOSMO906613","KOSMO830878","KOSMO476878",
-  "KOSMO372522","KOSMO328437","KOSMO159266","KOSMO861405",
-  "KOSMO993770","KOSMO536963","KOSMO322239","KOSMO429215",
-  "KOSMO043075","KOSMO691852","KOSMO258080","KOSMO235923",
-  "KOSMO358001","KOSMO840345","KOSMO389284","KOSMO755556",
-  "KOSMO329009","KOSMO315402","KOSMO550448","KOSMO675871",
-  "KOSMO172601","KOSMO765494","KOSMO382425","KOSMO987595",
-  "KOSMO817074","KOSMO060491","KOSMO014623","KOSMO055510",
-  "KOSMO553654","KOSMO935997","KOSMO795819","KOSMO923620",
-  "KOSMO249169","KOSMO157086","KOSMO666124","KOSMO077304",
-  "KOSMO060836","KOSMO925687","KOSMO223573","KOSMO620258",
-  "KOSMO192315","KOSMO304737","KOSMO443098","KOSMO288478",
-  "KOSMO468435","KOSMO503242","KOSMO477347","KOSMO372550",
-  "KOSMO902853","KOSMO848253","KOSMO235084","KOSMO667080",
-  "KOSMO190288","KOSMO121477","KOSMO196069","KOSMO976153",
-  "KOSMO082432","KOSMO916078","KOSMO581134","KOSMO697472",
-  "KOSMO020637","KOSMO855828","KOSMO775712","KOSMO351587",
-  "KOSMO503371","KOSMO802265","KOSMO512102","KOSMO890858"
-];
-const prizes=[
-"🎁 BONUS 10K","💰 BONUS 20K","🎉 FREE SPIN",
-"❌ ZONK","🔥 BONUS 50K","❌ ZONK"
-];
 
-let used=JSON.parse(localStorage.getItem("usedCoupons")||"[]");
-let freeSpin=localStorage.getItem("freeSpin")==="1";
+<script>
+/* ELEMENT */
+const wheel=document.getElementById("wheel");
+const spinBtn=document.getElementById("spinBtn");
+const status=document.getElementById("status");
+const userId=document.getElementById("userId");
+const coupon=document.getElementById("coupon");
+const userLabel=document.getElementById("userLabel");
+
+/* KUPON VALID */
+const validCoupons=[
+ "KOSMO123","KOSMO456","KOSMO789","KOSMO888","KOSMO999"
+];
+let usedCoupons=JSON.parse(localStorage.getItem("usedCoupons")||"[]");
+
+const prizes=["🎁 BONUS 10K","💰 BONUS 20K","🎉 FREE SPIN","❌ ZONK","🔥 BONUS 50K","❌ ZONK"];
 let spinning=false;
 
-/* ===== SPIN ===== */
-function spin(){
+/* USER LABEL */
+userId.oninput=()=>userLabel.innerHTML=userId.value?`ID: ${userId.value}`:"";
+
+/* SPIN */
+spinBtn.onclick=()=>{
   if(spinning) return;
 
   if(!userId.value){
@@ -297,100 +207,40 @@ function spin(){
     return;
   }
 
-  if(!freeSpin){
-    const c=coupon.value.trim().toUpperCase();
-    if(!validCoupons.includes(c)){
-      status.innerHTML="❌ Kupon tidak valid";
-      return;
-    }
-    if(used.includes(c)){
-      status.innerHTML="⚠️ Kupon sudah dipakai";
-      return;
-    }
-    used.push(c);
-    localStorage.setItem("usedCoupons",JSON.stringify(used));
+  const c=coupon.value.trim().toUpperCase();
+  if(!c){
+    status.innerHTML="❌ Masukkan KODE KUPON";
+    return;
+  }
+  if(!validCoupons.includes(c)){
+    status.innerHTML="❌ Kupon tidak valid";
+    return;
+  }
+  if(usedCoupons.includes(c)){
+    status.innerHTML="⚠️ Kupon sudah dipakai";
+    return;
   }
 
-  /* ⬇️ TAMBAHKAN DI SINI */
-  spinning = true;
-  spinBtn.disabled = true;
-  wheel.classList.add("wheel-spin"); // 🔥 EFEK GLOW
-  status.innerHTML = "🎡 Sedang memutar...";
-
-  /* ===== LOGIC RODA (TETAP) ===== */
-  const chance=Math.random()*100;
-  let r;
-  if(chance<0.5) r=4;
-  else if(chance<2) r=[0,1,2][Math.floor(Math.random()*3)];
-  else r=[3,3,3,5][Math.floor(Math.random()*4)];
-
-  wheel.style.transform=`rotate(${1440+r*60}deg)`;
-
-  setTimeout(()=>{
-    wheel.classList.remove("wheel-spin"); // ❌ MATIKAN GLOW
-    alert(`SELAMAT ${userId.value}\n${prizes[r]}`);
-
-    if(prizes[r].includes("FREE")){
-      freeSpin=true;
-      localStorage.setItem("freeSpin","1");
-    }
-
-    spinning=false;
-    spinBtn.disabled=false;
-    status.innerHTML="✅ Spin selesai";
-  },2800);
-}
-
-
-  if(!freeSpin){
-    const c=coupon.value.trim().toUpperCase();
-    if(!validCoupons.includes(c)){
-      status.innerHTML="❌ Kupon tidak valid";
-      return;
-    }
-    if(used.includes(c)){
-      status.innerHTML="⚠️ Kupon sudah dipakai";
-      return;
-    }
-    used.push(c);
-    localStorage.setItem("usedCoupons",JSON.stringify(used));
-  }
+  usedCoupons.push(c);
+  localStorage.setItem("usedCoupons",JSON.stringify(usedCoupons));
 
   spinning=true;
   spinBtn.disabled=true;
+  wheel.classList.add("wheel-spin");
   status.innerHTML="🎡 Sedang memutar...";
 
-  const chance=Math.random()*100;
-  let r;
-  if(chance<0.5) r=4;
-  else if(chance<2) r=[0,1,2][Math.floor(Math.random()*3)];
-  else r=[3,3,3,5][Math.floor(Math.random()*4)];
-
-  wheel.style.transform=`rotate(${1440+r*60}deg)`;
+  const r=Math.floor(Math.random()*6);
+  const extra=Math.floor(Math.random()*360);
+  wheel.style.transform=`rotate(${1440+r*60+extra}deg)`;
 
   setTimeout(()=>{
+    wheel.classList.remove("wheel-spin");
     alert(`SELAMAT ${userId.value}\n${prizes[r]}`);
-    if(prizes[r].includes("FREE")){
-      freeSpin=true;
-      localStorage.setItem("freeSpin","1");
-    }
     spinning=false;
     spinBtn.disabled=false;
     status.innerHTML="✅ Spin selesai";
-  },2800);
-}
-
-/* ===== POPUP HIASAN ===== */
-const fakeUsers=["abunawas","adli","mio1000","november","king","pras71"];
-const fakePrize=["BONUS 10K","BONUS 20K","BONUS 50K","FREE SPIN"];
-
-setInterval(()=>{
-  fakePopup.innerHTML=
-    `🎉 ${fakeUsers[Math.floor(Math.random()*fakeUsers.length)]}
-     mendapatkan ${fakePrize[Math.floor(Math.random()*fakePrize.length)]}`;
-  fakePopup.style.display="block";
-  setTimeout(()=>fakePopup.style.display="none",3000);
-},9000);
+  },3000);
+};
 </script>
 
 </body>
