@@ -11,33 +11,50 @@ body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:
-    linear-gradient(rgba(5,10,30,.85),rgba(5,10,30,.95)),
+    radial-gradient(circle at top,#061b3a,#020814 70%),
     url("https://i.ibb.co/QvPJVhRr/background.png");
   background-size:cover;
-  background-position:center;
   color:#fff;
   text-align:center;
   padding:20px;
 }
 
-/* ===== TITLE SHINE ===== */
+/* ===== TITLE SHINE PREMIUM ===== */
 .title{
-  font-size:32px;
+  font-size:34px;
   font-weight:900;
-  background:linear-gradient(120deg,#00eaff,#fff,#00eaff);
-  background-size:200%;
+  background:linear-gradient(
+    120deg,
+    #00eaff 0%,
+    #ffffff 25%,
+    #00eaff 50%,
+    #ffffff 75%,
+    #00eaff 100%
+  );
+  background-size:300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:shine 3s linear infinite;
-  text-shadow:0 0 25px #00eaff;
+  animation:shineMove 2.3s linear infinite;
+  text-shadow:
+    0 0 12px #00eaff,
+    0 0 30px #00c6ff;
 }
-@keyframes shine{to{background-position:200%}}
 
-.subtitle{
-  margin-top:5px;
-  font-size:20px;
-  letter-spacing:2px;
-  opacity:.9;
+@keyframes shineMove{
+  from{background-position:0%}
+  to{background-position:300%}
+}
+
+/* ===== LUCKY WHEEL TEXT ===== */
+.shine-text{
+  font-size:22px;
+  font-weight:900;
+  color:#00eaff;
+  text-shadow:
+    0 0 10px #00eaff,
+    0 0 25px #00c6ff,
+    0 0 45px #00eaff;
+  margin-bottom:10px;
 }
 
 /* ===== INPUT ===== */
@@ -46,32 +63,31 @@ input{
   max-width:360px;
   padding:12px;
   margin:6px 0;
-  border-radius:10px;
+  border-radius:12px;
   border:none;
   font-size:15px;
   text-align:center;
 }
 
+/* ===== BUTTON ===== */
 button{
-  margin-top:12px;
-  padding:12px 36px;
+  margin-top:14px;
+  padding:14px 42px;
   border:none;
-  border-radius:30px;
-  background:linear-gradient(45deg,#00ff9c,#00c6ff);
+  border-radius:40px;
+  background:linear-gradient(45deg,#00eaff,#00ff9c);
   font-weight:bold;
-  font-size:16px;
+  font-size:17px;
   cursor:pointer;
-  box-shadow:0 0 20px #00c6ff;
+  box-shadow:0 0 25px #00eaff;
+  transition:.3s;
 }
+button:hover{transform:scale(1.06)}
+button:disabled{opacity:.5}
 
-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-/* ===== USER LABEL ===== */
+/* ===== USER ===== */
 #userLabel{
-  margin-top:8px;
+  margin-top:6px;
   font-weight:bold;
   color:#7ffcff;
 }
@@ -79,20 +95,21 @@ button:disabled{
 /* ===== WHEEL ===== */
 #wheelWrap{
   position:relative;
-  width:320px;
-  height:320px;
-  margin:30px auto 80px;
+  width:330px;
+  height:330px;
+  margin:30px auto 90px;
 }
 
 #pointer{
   position:absolute;
-  top:-15px;
+  top:-18px;
   left:50%;
   transform:translateX(-50%);
   width:0;height:0;
-  border-left:15px solid transparent;
-  border-right:15px solid transparent;
-  border-bottom:30px solid #fff;
+  border-left:16px solid transparent;
+  border-right:16px solid transparent;
+  border-bottom:34px solid #fff;
+  filter:drop-shadow(0 0 10px #00eaff);
 }
 
 #wheel{
@@ -107,11 +124,22 @@ button:disabled{
     #2196f3 240deg 300deg,
     #9c27b0 300deg 360deg
   );
-  transition:transform 2.8s cubic-bezier(.1,.9,.1,1);
-  box-shadow:0 0 35px rgba(0,200,255,.6);
+  transition:transform 2.9s cubic-bezier(.1,.9,.1,1);
+  box-shadow:
+    0 0 25px rgba(0,200,255,.7),
+    0 0 60px rgba(0,200,255,.6);
 }
 
-/* ===== SEGMENT TEXT ===== */
+/* ===== SPIN GLOW ===== */
+.wheel-spin{
+  animation:spinGlow .6s infinite alternate;
+}
+@keyframes spinGlow{
+  from{box-shadow:0 0 25px #00eaff}
+  to{box-shadow:0 0 55px #00c6ff}
+}
+
+/* ===== SEGMENT ===== */
 .segment{
   position:absolute;
   width:50%;
@@ -120,51 +148,68 @@ button:disabled{
   transform-origin:left center;
   font-size:13px;
   font-weight:bold;
-  text-shadow:0 0 5px #000;
+  text-shadow:0 0 6px #000;
 }
 
 /* ===== CENTER LOGO ===== */
 #center{
   position:absolute;
-  width:110px;
-  height:110px;
+  width:120px;
+  height:120px;
   border-radius:50%;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  background:#050b1f;
+  background:#030b1f;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 0 30px #00eaff;
-  overflow:hidden;
+  box-shadow:
+    0 0 30px #00eaff,
+    0 0 55px rgba(0,200,255,.9);
 }
 
-#center img{width:70%}
+#center img{
+  width:72%;
+  animation:logoPulse 2.2s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 8px #00eaff)
+    drop-shadow(0 0 18px #00c6ff);
+}
 
-/* ===== POPUP HIASAN (FIX DI BAWAH RODA) ===== */
+@keyframes logoPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+}
+
+/* ===== POPUP ===== */
 #fakePopup{
   position:absolute;
-  bottom:-55px;
+  bottom:-60px;
   left:50%;
   transform:translateX(-50%);
-  background:#000c;
-  padding:10px 18px;
-  border-radius:20px;
+  background:rgba(0,10,30,.9);
+  padding:10px 22px;
+  border-radius:30px;
   font-size:13px;
   font-weight:bold;
   color:#7ffcff;
-  box-shadow:0 0 18px #00eaff;
+  box-shadow:0 0 22px #00eaff;
   display:none;
-  white-space:nowrap;
+  animation:fadePop .5s;
 }
 
-/* ===== STATUS ===== */
+@keyframes fadePop{
+  from{opacity:0;transform:translate(-50%,10px)}
+  to{opacity:1}
+}
+
 #status{
   margin-top:10px;
   font-weight:bold;
 }
 </style>
+
 </head>
 
 <body>
@@ -237,18 +282,59 @@ let used=JSON.parse(localStorage.getItem("usedCoupons")||"[]");
 let freeSpin=localStorage.getItem("freeSpin")==="1";
 let spinning=false;
 
-/* ===== ID USER ===== */
-userId.oninput=()=>{
-  userLabel.innerHTML=userId.value?`ID: ${userId.value}`:"";
-};
-
 /* ===== SPIN ===== */
 function spin(){
   if(spinning) return;
+
   if(!userId.value){
     status.innerHTML="❌ Masukkan ID USER";
     return;
   }
+
+  if(!freeSpin){
+    const c=coupon.value.trim().toUpperCase();
+    if(!validCoupons.includes(c)){
+      status.innerHTML="❌ Kupon tidak valid";
+      return;
+    }
+    if(used.includes(c)){
+      status.innerHTML="⚠️ Kupon sudah dipakai";
+      return;
+    }
+    used.push(c);
+    localStorage.setItem("usedCoupons",JSON.stringify(used));
+  }
+
+  /* ⬇️ TAMBAHKAN DI SINI */
+  spinning = true;
+  spinBtn.disabled = true;
+  wheel.classList.add("wheel-spin"); // 🔥 EFEK GLOW
+  status.innerHTML = "🎡 Sedang memutar...";
+
+  /* ===== LOGIC RODA (TETAP) ===== */
+  const chance=Math.random()*100;
+  let r;
+  if(chance<0.5) r=4;
+  else if(chance<2) r=[0,1,2][Math.floor(Math.random()*3)];
+  else r=[3,3,3,5][Math.floor(Math.random()*4)];
+
+  wheel.style.transform=`rotate(${1440+r*60}deg)`;
+
+  setTimeout(()=>{
+    wheel.classList.remove("wheel-spin"); // ❌ MATIKAN GLOW
+    alert(`SELAMAT ${userId.value}\n${prizes[r]}`);
+
+    if(prizes[r].includes("FREE")){
+      freeSpin=true;
+      localStorage.setItem("freeSpin","1");
+    }
+
+    spinning=false;
+    spinBtn.disabled=false;
+    status.innerHTML="✅ Spin selesai";
+  },2800);
+}
+
 
   if(!freeSpin){
     const c=coupon.value.trim().toUpperCase();
