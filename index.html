@@ -2,24 +2,66 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Lucky Wheel</title>
+<title>Lucky Wheel Kosmo Toto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ================= BODY & BACKGROUND ================= */
 body{
-  background:#0b0b18;
-  color:#fff;
+  margin:0;
+  min-height:100vh;
   font-family:Arial, sans-serif;
   text-align:center;
+  color:#fff;
   padding:20px;
+  background:
+    linear-gradient(rgba(5,10,30,.8), rgba(5,10,30,.9)),
+    url("https://i.ibb.co/QvPJVhRr/background.png");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
 }
-h2{margin-bottom:10px}
 
+/* ================= JUDUL SHINE ================= */
+.logo-title,
+.shine-text{
+  position:relative;
+  display:inline-block;
+  font-weight:800;
+  letter-spacing:2px;
+  background:linear-gradient(
+    120deg,
+    #00e5ff 0%,
+    #ffffff 40%,
+    #00e5ff 80%
+  );
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 3s linear infinite;
+  text-shadow:0 0 20px rgba(0,198,255,.7);
+}
+
+.logo-title{
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.shine-text{
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+@keyframes shine{
+  to{ background-position:200% center; }
+}
+
+/* ================= INPUT & BUTTON ================= */
 input{
   padding:12px;
   width:80%;
   max-width:320px;
-  border-radius:6px;
+  border-radius:8px;
   border:none;
   font-size:16px;
   text-align:center;
@@ -28,13 +70,14 @@ input{
 
 button{
   margin-top:15px;
-  padding:12px 25px;
+  padding:12px 30px;
   font-size:16px;
   border:none;
   border-radius:30px;
   background:linear-gradient(45deg,#00ff9c,#00c6ff);
   cursor:pointer;
   font-weight:bold;
+  box-shadow:0 0 15px #00c6ff;
 }
 
 #status{
@@ -42,10 +85,26 @@ button{
   font-weight:bold;
 }
 
-#wheel-box{
-  margin:30px auto;
-  width:260px;
-  height:260px;
+/* ================= POINTER ================= */
+#pointer{
+  width:0;height:0;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-bottom:28px solid #fff;
+  margin:20px auto -10px;
+}
+
+/* ================= WHEEL ================= */
+#wheel-container{
+  position:relative;
+  width:300px;
+  height:300px;
+  margin:0 auto;
+}
+
+#wheel{
+  width:100%;
+  height:100%;
   border-radius:50%;
   background:conic-gradient(
     #ff5252 0deg 60deg,
@@ -55,28 +114,80 @@ button{
     #2196f3 240deg 300deg,
     #9c27b0 300deg 360deg
   );
+  transition:transform 2.2s cubic-bezier(.05,.9,.1,1);
+  position:relative;
+  box-shadow:0 0 30px rgba(0,198,255,.5);
+}
+
+/* ================= TEXT SEGMENT ================= */
+.segment-text{
+  position:absolute;
+  width:50%;
+  left:50%;
+  top:50%;
+  transform-origin:left center;
+  font-size:13px;
+  font-weight:bold;
+  color:#fff;
+  text-shadow:0 0 5px #000;
+}
+
+/* ================= LOGO TENGAH ================= */
+#center-logo{
+  position:absolute;
+  width:105px;
+  height:105px;
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#050b1f;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:transform 4s cubic-bezier(.17,.67,.25,1);
+  overflow:hidden;
+  box-shadow:
+    0 0 25px #00c6ff,
+    inset 0 0 15px rgba(0,198,255,.6);
+  z-index:10;
 }
 
-#pointer{
-  width:0;height:0;
-  border-left:12px solid transparent;
-  border-right:12px solid transparent;
-  border-bottom:25px solid #fff;
-  margin:0 auto 10px;
+#center-logo img{
+  width:70%;
+  height:70%;
+  object-fit:contain;
+  z-index:2;
 }
 
-.hidden{display:none}
+/* ================= CAHAYA LOGO ================= */
+.logo-shine{
+  position:absolute;
+  top:-50%;
+  left:-60%;
+  width:50%;
+  height:200%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.9),
+    transparent
+  );
+  transform:rotate(25deg);
+  animation:logoShine 2.8s infinite;
+}
+
+@keyframes logoShine{
+  0%{ left:-60%; }
+  100%{ left:160%; }
+}
 </style>
 </head>
 
 <body>
 
-<h2>🎡 LUCKY WHEEL</h2>
-<p>Masukkan kode dari admin untuk spin</p>
+<div class="logo-title">KOSMO TOTO</div><br>
+<div class="shine-text">🎡 LUCKY WHEEL</div>
+<p>Masukkan kode kupon dari admin</p>
 
 <input id="coupon" placeholder="MASUKKAN KODE KUPON">
 <br>
@@ -85,12 +196,24 @@ button{
 <div id="status"></div>
 
 <div id="pointer"></div>
-<div id="wheel-box"></div>
+
+<div id="wheel-container">
+  <div id="wheel">
+    <div class="segment-text" style="transform:rotate(0deg) translateX(20px)">🎁 BONUS 10K</div>
+    <div class="segment-text" style="transform:rotate(60deg) translateX(20px)">💰 BONUS 20K</div>
+    <div class="segment-text" style="transform:rotate(120deg) translateX(20px)">🎉 FREE SPIN</div>
+    <div class="segment-text" style="transform:rotate(180deg) translateX(20px)">❌ ZONK</div>
+    <div class="segment-text" style="transform:rotate(240deg) translateX(20px)">🔥 BONUS 50K</div>
+    <div class="segment-text" style="transform:rotate(300deg) translateX(20px)">🎫 COBA LAGI</div>
+  </div>
+
+  <div id="center-logo">
+    <img src="https://i.ibb.co/CsXqGZVn/logo.png" alt="KOSMO TOTO">
+    <span class="logo-shine"></span>
+  </div>
+</div>
 
 <script>
-// ============================
-// DAFTAR KODE DARI ADMIN
-// ============================
 const validCoupons = [
   "KOSMO483920",
   "KOSMO193847",
@@ -98,7 +221,6 @@ const validCoupons = [
   "KOSMO847261"
 ];
 
-// hadiah
 const prizes = [
   "🎁 BONUS 10K",
   "💰 BONUS 20K",
@@ -108,13 +230,12 @@ const prizes = [
   "🎫 COBA LAGI"
 ];
 
-// cek local lock
 let usedCoupons = JSON.parse(localStorage.getItem("usedCoupons") || "[]");
 
 function spin(){
   const input = document.getElementById("coupon").value.trim().toUpperCase();
   const status = document.getElementById("status");
-  const wheel = document.getElementById("wheel-box");
+  const wheel = document.getElementById("wheel");
 
   if(!input){
     status.innerHTML = "❌ Masukkan kode terlebih dahulu";
@@ -134,22 +255,34 @@ function spin(){
     return;
   }
 
-  // kunci kode
   usedCoupons.push(input);
   localStorage.setItem("usedCoupons", JSON.stringify(usedCoupons));
-
-  const rand = Math.floor(Math.random() * prizes.length);
-  const degree = 360 * 5 + rand * (360 / prizes.length);
-
-  wheel.style.transform = `rotate(${degree}deg)`;
 
   status.innerHTML = "🎉 Sedang memutar...";
   status.style.color = "#00ff9c";
 
+  /* ===== LOGIC 5% MENANG ===== */
+  let rand;
+  const chance = Math.random() * 100;
+
+  if(chance <= 5){
+    const winIndex = [0,1,2,4];
+    rand = winIndex[Math.floor(Math.random() * winIndex.length)];
+  }else{
+    const loseIndex = [3,5];
+    rand = loseIndex[Math.floor(Math.random() * loseIndex.length)];
+  }
+
+  const segmentDeg = 360 / prizes.length;
+  const extraSpin = 360 * (6 + Math.floor(Math.random() * 3));
+  const degree = extraSpin + rand * segmentDeg;
+
+  wheel.style.transform = `rotate(${degree}deg)`;
+
   setTimeout(()=>{
     alert("HASIL SPIN:\n" + prizes[rand]);
     status.innerHTML = "✅ Kode berhasil digunakan";
-  },4000);
+  },2200);
 }
 </script>
 
