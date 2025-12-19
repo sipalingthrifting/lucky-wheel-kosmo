@@ -116,7 +116,7 @@ button{
 
 #center-logo img{width:70%}
 
-/* POPUP RESULT */
+/* RESULT POPUP */
 #resultPopup{
   position:fixed;
   inset:0;
@@ -132,9 +132,7 @@ button{
   border-radius:15px;
   box-shadow:0 0 25px #00c6ff;
 }
-#resultBox button{
-  margin-top:15px;
-}
+#resultBox button{margin-top:15px}
 
 /* LIVE POPUP */
 #livePopup{
@@ -174,7 +172,7 @@ button{
     <div class="segment-text" style="transform:rotate(120deg) translateX(20px)">🎉 FREE SPIN</div>
     <div class="segment-text" style="transform:rotate(180deg) translateX(20px)">❌ ZONK</div>
     <div class="segment-text" style="transform:rotate(240deg) translateX(20px)">🔥 BONUS 50K</div>
-    <div class="segment-text" style="transform:rotate(300deg) translateX(20px)">🎫 COBA LAGI</div>
+    <div class="segment-text" style="transform:rotate(300deg) translateX(20px)">❌ ZONK</div>
   </div>
 
   <div id="center-logo">
@@ -201,18 +199,19 @@ const validCoupons=[
 ];
 let usedCoupons=JSON.parse(localStorage.getItem("usedCoupons")||"[]");
 
-/* ===== DATA ===== */
+/* ===== HADIAH ===== */
 const prizes=[
 "🎁 BONUS 10K",
 "💰 BONUS 20K",
 "🎉 FREE SPIN",
 "❌ ZONK",
 "🔥 BONUS 50K",
-"🎫 COBA LAGI"
+"❌ ZONK"
 ];
 
 let spinning=false;
 
+/* ===== SPIN (ZONK 90–95%) ===== */
 function spin(){
   if(spinning) return;
   spinning=true;
@@ -231,19 +230,26 @@ function spin(){
   status.innerText="🎡 Memutar...";
   document.getElementById("spinBtn").disabled=true;
 
-  let chance=Math.random()*100;
-  let index;
+  /* TOTAL 100 | ZONK = 92% */
+  const weights=[1,1,1,92,1,4];
 
-  if(chance<0.5){index=4;}
-  else if(chance<1){index=[0,1,2][Math.floor(Math.random()*3)];}
-  else{index=[3,3,3,3,5][Math.floor(Math.random()*5)];}
+  let total=weights.reduce((a,b)=>a+b,0);
+  let rand=Math.random()*total;
+  let index=0;
+  for(let i=0;i<weights.length;i++){
+    rand-=weights[i];
+    if(rand<=0){index=i;break;}
+  }
 
-  const deg=360*(6+Math.random()*3)+index*(360/6);
-  wheel.style.transform=`rotate(${deg}deg)`;
+  const segment=360/prizes.length;
+  const offset=Math.random()*segment;
+  const finalDeg=360*6+(360-(index*segment+offset));
+
+  wheel.style.transform=`rotate(${finalDeg}deg)`;
 
   setTimeout(()=>{
     document.getElementById("resultText").innerHTML=
-    `SELAMAT 🎉<br>KAMU MENDAPATKAN<br><b>${prizes[index]}</b>`;
+      `SELAMAT 🎉<br>KAMU MENDAPATKAN<br><b>${prizes[index]}</b>`;
     document.getElementById("resultPopup").style.display="flex";
     status.innerText="✅ Selesai";
     spinning=false;
@@ -254,10 +260,10 @@ function closeResult(){
   document.getElementById("resultPopup").style.display="none";
 }
 
-/* ===== LIVE POPUP HIASAN ===== */
+/* ===== LIVE POPUP ===== */
 const liveUsers=[
-"abunawas","adli","admin77","adul9349","alfas123","azam010119",
-"balala01","bethon","bodrex784","mio1000","nagamas","november"
+"abunawas","adli","admin77","adul9349","alfas123",
+"azam010119","balala01","bethon","bodrex784","mio1000"
 ];
 const livePrizes=["🎁 BONUS 10K","💰 BONUS 20K","🔥 BONUS 50K","🎉 FREE SPIN"];
 
