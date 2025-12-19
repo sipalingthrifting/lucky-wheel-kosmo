@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Lucky Wheel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  background:#0b0b18;
+  color:#fff;
+  font-family:Arial, sans-serif;
+  text-align:center;
+  padding:20px;
+}
+h2{margin-bottom:10px}
+
+input{
+  padding:12px;
+  width:80%;
+  max-width:320px;
+  border-radius:6px;
+  border:none;
+  font-size:16px;
+  text-align:center;
+  margin-top:10px;
+}
+
+button{
+  margin-top:15px;
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#00ff9c,#00c6ff);
+  cursor:pointer;
+  font-weight:bold;
+}
+
+#status{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+#wheel-box{
+  margin:30px auto;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:conic-gradient(
+    #ff5252 0deg 60deg,
+    #ff9800 60deg 120deg,
+    #ffeb3b 120deg 180deg,
+    #4caf50 180deg 240deg,
+    #2196f3 240deg 300deg,
+    #9c27b0 300deg 360deg
+  );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 4s cubic-bezier(.17,.67,.25,1);
+}
+
+#pointer{
+  width:0;height:0;
+  border-left:12px solid transparent;
+  border-right:12px solid transparent;
+  border-bottom:25px solid #fff;
+  margin:0 auto 10px;
+}
+
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<h2>🎡 LUCKY WHEEL</h2>
+<p>Masukkan kode dari admin untuk spin</p>
+
+<input id="coupon" placeholder="MASUKKAN KODE KUPON">
+<br>
+<button onclick="spin()">SPIN</button>
+
+<div id="status"></div>
+
+<div id="pointer"></div>
+<div id="wheel-box"></div>
+
+<script>
+// ============================
+// DAFTAR KODE DARI ADMIN
+// ============================
+const validCoupons = [
+  "KOSMO483920",
+  "KOSMO193847",
+  "KOSMO572910",
+  "KOSMO847261"
+];
+
+// hadiah
+const prizes = [
+  "🎁 BONUS 10K",
+  "💰 BONUS 20K",
+  "🎉 FREE SPIN",
+  "❌ ZONK",
+  "🔥 BONUS 50K",
+  "🎫 COBA LAGI"
+];
+
+// cek local lock
+let usedCoupons = JSON.parse(localStorage.getItem("usedCoupons") || "[]");
+
+function spin(){
+  const input = document.getElementById("coupon").value.trim().toUpperCase();
+  const status = document.getElementById("status");
+  const wheel = document.getElementById("wheel-box");
+
+  if(!input){
+    status.innerHTML = "❌ Masukkan kode terlebih dahulu";
+    status.style.color = "#ff5252";
+    return;
+  }
+
+  if(!validCoupons.includes(input)){
+    status.innerHTML = "❌ Kode tidak valid";
+    status.style.color = "#ff5252";
+    return;
+  }
+
+  if(usedCoupons.includes(input)){
+    status.innerHTML = "⚠️ Kode sudah digunakan";
+    status.style.color = "#ff9800";
+    return;
+  }
+
+  // kunci kode
+  usedCoupons.push(input);
+  localStorage.setItem("usedCoupons", JSON.stringify(usedCoupons));
+
+  const rand = Math.floor(Math.random() * prizes.length);
+  const degree = 360 * 5 + rand * (360 / prizes.length);
+
+  wheel.style.transform = `rotate(${degree}deg)`;
+
+  status.innerHTML = "🎉 Sedang memutar...";
+  status.style.color = "#00ff9c";
+
+  setTimeout(()=>{
+    alert("HASIL SPIN:\n" + prizes[rand]);
+    status.innerHTML = "✅ Kode berhasil digunakan";
+  },4000);
+}
+</script>
+
+</body>
+</html>
